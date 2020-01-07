@@ -11,7 +11,7 @@ get_acs <- function(year){
 
 get_sf1 <- function(year){
   load_variables(year, "sf1") %>%
-    separate(col = "name", into = c("table", "variable"), remove = FALSE, sep = "_") %>%
+    separate(col = "name", into = c("table", "variable"), remove = FALSE, sep = 4) %>%
     select(-variable) %>%
     mutate(year = year,
            type = "sf1")
