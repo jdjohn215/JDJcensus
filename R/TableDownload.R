@@ -11,7 +11,6 @@
 #' @export
 #' @importFrom tidycensus get_acs
 #' @importFrom tidycensus get_decennial
-#' @import tidyverse
 #'
 #' @examples table_download("HISPANIC OR LATINO ORIGIN BY RACE", geography = "tract", source = "acs", year = 2018, state = "WI", county = "079")
 table_download <- function(table, geography, source = "acs", year = 2018, state = NULL, county = NULL){
