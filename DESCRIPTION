@@ -9,3 +9,4 @@ Description: This package mostly wraps tidycensus functions that access the
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.1.1
