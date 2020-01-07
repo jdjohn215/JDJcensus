@@ -23,6 +23,7 @@ acs.vars <- map(2010:2018, get_acs) %>%
 sf1.vars <- map(c(1990,2000,2010), get_sf1) %>%
   bind_rows()
 
-AllVariables <- bind_rows(acs.vars, sf1.vars)
+AllVariables <- bind_rows(acs.vars, sf1.vars) %>%
+  mutate(type = replace(type, is.na(type), "acs"))
 
 usethis::use_data(AllVariables, overwrite = TRUE)
