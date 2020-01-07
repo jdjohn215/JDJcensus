@@ -1,0 +1,66 @@
+---
+title: "README"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{README}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(JDJcensus)
+library(tidyverse)
+```
+
+This package includes tools to make accessing census data faster. It wraps commands from the excellent [**tidycensus**](https://walkerke.github.io/tidycensus/index.html) package, which pulls from the Census API. If you haven't already, you'll need to install a census API key. [**Sign up for an API key here**](https://api.census.gov/data/key_signup.html). Then [**follow these instructions**](https://walkerke.github.io/tidycensus/reference/census_api_key.html) to install it in your .Renviron file for repeated use.
+
+`JDJcensus` builds on `tidycensus` by providing a built-in dataframe with all variable names from different data sources combined. It also returns census data with the data source, year, and text label appended.
+
+## Getting started
+
+Install the package this way.
+
+`devtools::install_github("jdjohn215/JDJcensus")`
+
+`JDJcensus` includes a built in file showing all the available variables from 2010-2018 American Community Surveys (ACS) and the 1990, 2000, 2010 SF1 decennial census products. You can access it by running `View(AllVariables)`. It looks like this
+
+```{r, echo=FALSE}
+reactable::reactable(AllVariables, filterable = TRUE, searchable = TRUE, defaultPageSize = 5,
+                     striped = TRUE)
+```
+
+## Downloading data
+
+You can identify the table you want to download either with "table" code or the "concept" label. For example, the `SEX BY AGE` concept is table code `B01001`.
+
+Use either the table code or concept label in the `table_download` function.
+
+This example downloads the selected table for census tracts in Milwaukee County, Wisconsin from the 2018 5YR ACS.
+```{r}
+table_download("HISPANIC OR LATINO ORIGIN BY RACE",
+               geography = "tract", source = "acs", year = 2018, 
+               state = "WI", county = "MILWAUKEE")
+```
+
+This example downloads the same table for each state in the 2010 decennial census.
+```{r}
+table_download("HISPANIC OR LATINO ORIGIN BY RACE",
+               geography = "state", source = "sf1", year = 2010)
+```
+
+Commonly, I find myself downloading data for the same area over and over again. Here's an example of a simple helper function that can speed up that process.
+```{r}
+quick_acs <- function(table){
+  table_download(table = table, geography = "tract", source = "acs", year = 2018,
+                 state = "WI", county = "MILWAUKEE")
+}
+
+quick_acs("MEDIAN AGE BY SEX")
+```
