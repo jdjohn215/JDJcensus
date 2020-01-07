@@ -16,7 +16,7 @@
 #' @examples table_download("HISPANIC OR LATINO ORIGIN BY RACE", geography = "tract", source = "acs", year = 2018, state = "WI", county = "079")
 table_download <- function(table, geography, source = "acs", year = 2018, state = NULL, county = NULL){
   # table or concept?
-  table <- str_to_upper(table)
+  table <- stringr::str_to_upper(table)
   if(table %in% AllVariables$table){
     arg.type <- "table"
   } else if(table %in% AllVariables$concept){
