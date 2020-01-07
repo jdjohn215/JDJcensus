@@ -1,6 +1,6 @@
 ---
 title: "README"
-output: github_document
+output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{README}
   %\VignetteEngine{knitr::rmarkdown}
