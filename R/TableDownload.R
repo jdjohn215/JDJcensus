@@ -6,15 +6,17 @@
 #' @param year one of 1990, 2000, or 2010 for decennial data, or 2010-2018 for ACS data
 #' @param state an optional state specification, names, postal abbreviations, and FIPS accepted
 #' @param county an optional county specification, names and FIPS accepted
+#' @param geometry logical, if TRUE returns sf object
 #'
-#' @return
+#' @return a dataframe
 #' @export
 #' @importFrom tidycensus get_acs
 #' @importFrom tidycensus get_decennial
 #' @importFrom stringr str_to_upper
 #'
 #' @examples table_download("HISPANIC OR LATINO ORIGIN BY RACE", geography = "tract", source = "acs", year = 2018, state = "WI", county = "079")
-table_download <- function(table, geography, source = "acs", year = 2018, state = NULL, county = NULL){
+table_download <- function(table, geography, source = "acs", year = 2018,
+                           state = NULL, county = NULL, geometry = FALSE){
   # table or concept?
   table <- stringr::str_to_upper(table)
   if(table %in% AllVariables$table){
@@ -34,7 +36,8 @@ table_download <- function(table, geography, source = "acs", year = 2018, state 
     if(arg.type == "table"){
       # get the data
       df <- suppressMessages(get_acs(geography = geography, table = table,
-                                     year = year, state = state, county = county))
+                                     year = year, state = state, county = county,
+                                     geometry = geometry))
 
       # add text variable description
       df %>%
@@ -48,7 +51,8 @@ table_download <- function(table, geography, source = "acs", year = 2018, state 
 
       # get the data
       df <- suppressMessages(get_acs(geography = geography, table = concept.table,
-                                     year = year, state = state, county = county))
+                                     year = year, state = state, county = county,
+                                     geometry = geometry))
 
       # add text variable description
       df %>%
@@ -62,7 +66,8 @@ table_download <- function(table, geography, source = "acs", year = 2018, state 
     if(arg.type == "table"){
       # get the data
       df <- suppressMessages(get_decennial(geography = geography, table = table,
-                                           year = year, state = state, county = county))
+                                           year = year, state = state, county = county,
+                                           geometry = geometry))
 
       # add text variable description
       df %>%
@@ -76,7 +81,8 @@ table_download <- function(table, geography, source = "acs", year = 2018, state 
 
       # get the data
       df <- suppressMessages(get_decennial(geography = geography, table = concept.table,
-                                           year = year, state = state, county = county))
+                                           year = year, state = state, county = county,
+                                           geometry = geometry))
 
       # add text variable description
       df %>%

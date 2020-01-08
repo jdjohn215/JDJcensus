@@ -5,7 +5,7 @@
 \title{table_download}
 \usage{
 table_download(table, geography, source = "acs", year = 2018,
-  state = NULL, county = NULL)
+  state = NULL, county = NULL, geometry = FALSE)
 }
 \arguments{
 \item{table}{a character string either of the table name or concept (consult AllVariables)}
@@ -19,6 +19,11 @@ table_download(table, geography, source = "acs", year = 2018,
 \item{state}{an optional state specification, names, postal abbreviations, and FIPS accepted}
 
 \item{county}{an optional county specification, names and FIPS accepted}
+
+\item{geometry}{logical, if TRUE returns sf object}
+}
+\value{
+a dataframe
 }
 \description{
 table_download
